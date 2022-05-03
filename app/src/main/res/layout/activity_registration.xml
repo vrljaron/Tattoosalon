@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".RegistrationActivity">
 
+
     <TextView
         android:id="@+id/regText"
         android:layout_width="wrap_content"
@@ -16,7 +17,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintVertical_bias="0.064" />
 
     <EditText
         android:id="@+id/RegUserName"
@@ -24,12 +25,12 @@
         android:layout_height="48dp"
         android:ems="10"
         android:hint="@string/name"
-        android:inputType="text"
+        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/regText"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintVertical_bias="0.032" />
 
     <EditText
         android:id="@+id/regEmail"
@@ -70,13 +71,40 @@
         app:layout_constraintTop_toBottomOf="@+id/regPassword"
         app:layout_constraintVertical_bias="0.052" />
 
+    <EditText
+        android:id="@+id/regPhone"
+        android:layout_width="403dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regPassword_Again"
+        app:layout_constraintVertical_bias="0.052" />
+
+    <Spinner
+
+        android:id="@+id/regPhoneType"
+        android:layout_width="403dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/phone_types"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/regPhone"
+        app:layout_constraintVertical_bias="0.052" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regPassword_Again">
+        app:layout_constraintTop_toBottomOf="@+id/regPhoneType">
 
 
         <Button
@@ -91,10 +119,10 @@
             android:id="@+id/canButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
             android:layout_weight="1"
             android:onClick="cancel"
-            android:layout_marginStart="40dp"
-            android:text="@android:string/cancel" />
+            android:text="@string/cancel" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

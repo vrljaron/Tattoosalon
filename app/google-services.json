@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1044994819663",
+    "project_id": "androidtattoosalon",
+    "storage_bucket": "androidtattoosalon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1044994819663:android:471f8ec487566370dc0c3a",
+        "android_client_info": {
+          "package_name": "com.example.tattoosalon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1044994819663-3qk307rlmrk6fsvg3fo15rs9vdj4iunn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tattoosalon",
+            "certificate_hash": "50e2b03939808c325e1d4dc53f6667d0b595eda2"
+          }
+        },
+        {
+          "client_id": "1044994819663-pshphd8hlf3u9o5iftusfl20k4tm78ft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwIqiuBUQ7j7vqm-5Q8w-6y31otl--HCI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1044994819663-pshphd8hlf3u9o5iftusfl20k4tm78ft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

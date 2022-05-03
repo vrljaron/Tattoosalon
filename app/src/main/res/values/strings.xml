@@ -6,4 +6,14 @@
     <string name="registration">Registration</string>
     <string name="email">E-mail</string>
     <string name="password_again">Password Again</string>
+    <string name="phone">Phone</string>
+    <string name="phone_types">Phone Types</string>
+    <string name="cancel">Cancel</string>
+    <string name="login_as_guest">login As Guest</string>
+    <string-array name="phone_type">
+        <item>Landline</item>
+        <item>Work</item>
+        <item>Mobile</item>
+        <item>Other</item>
+    </string-array>
 </resources>

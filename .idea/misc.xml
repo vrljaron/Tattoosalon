@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/Tattoosalon/app/src/main/res/layout-land/activity_main.xml" value="0.15961199294532627" />
+        <entry key="..\:/AndroidStudioProjects/Tattoosalon/app/src/main/res/layout-land/activity_main.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/Tattoosalon/app/src/main/res/layout-land/activity_registration.xml" value="0.1591710758377425" />
         <entry key="..\:/AndroidStudioProjects/Tattoosalon/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/Tattoosalon/app/src/main/res/layout/activity_registration.xml" value="0.18802083333333333" />
       </map>

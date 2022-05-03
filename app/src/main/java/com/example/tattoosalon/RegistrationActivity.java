@@ -1,18 +1,36 @@
 package com.example.tattoosalon;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-public class RegistrationActivity extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String LOG_TAG = RegistrationActivity.class.getName();
+    private static final String PREF_KEY = RegistrationActivity.class.getPackage().toString();
     EditText userNameET;
     EditText emailET;
     EditText pwET;
     EditText pwConET;
+    EditText phoneET;
+
+    Spinner spinner;
+
+    private SharedPreferences preferences;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +46,23 @@ public class RegistrationActivity extends AppCompatActivity {
         emailET = findViewById(R.id.regEmail);
         pwET = findViewById(R.id.regPassword);
         pwConET = findViewById(R.id.regPassword_Again);
+        phoneET = findViewById(R.id.regPhone);
+        spinner = findViewById(R.id.regPhoneType);
+
+        preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
+
+        String username = preferences.getString("userName", "");
+        String password = preferences.getString("password", "");
+
+        userNameET.setText(username);
+        pwET.setText(password);
+
+        spinner.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.phone_type, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     public void registration(View view) {
@@ -35,14 +70,49 @@ public class RegistrationActivity extends AppCompatActivity {
         String email = emailET.getText().toString();
         String pw = pwET.getText().toString();
         String pwConfirm = pwConET.getText().toString();
+        String phone = phoneET.getText().toString();
+        String phoneType = spinner.getSelectedItem().toString();
 
-        if (!pw.equals(pwConfirm)) {
-            Log.e(LOG_TAG, "password != passwordConfirm");
+        if (username.length() == 0) {
+            Toast.makeText(RegistrationActivity.this, "You have to write a name.", Toast.LENGTH_LONG).show();
+        } else if (email.length() == 0) {
+            Toast.makeText(RegistrationActivity.this, "You have to write an email.", Toast.LENGTH_LONG).show();
+        } else if (pw.length() == 0) {
+            Toast.makeText(RegistrationActivity.this, "You have to write a password.", Toast.LENGTH_LONG).show();
+        } else if (!pw.equals(pwConfirm)) {
+            Toast.makeText(RegistrationActivity.this, "The password and the confirm password are not the same.", Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.createUserWithEmailAndPassword(email, pw).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        Log.d(LOG_TAG, "User created successfully");
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("email", emailET.getText().toString());
+                        editor.putString("password", pwET.getText().toString());
+                        editor.apply();
+                        finish();
+
+                    } else {
+                        Log.d(LOG_TAG, "User hasn't created successfully");
+                        Toast.makeText(RegistrationActivity.this, "User hasn't created successfully " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
         }
-        Log.i(LOG_TAG, "registration: " + username + " email: " + email);
     }
 
     public void cancel(View view) {
         finish();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
