@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/search_bar"
+    android:title="@string/search"
+    android:icon="@drawable/ic_search"
+    app:showAsAction="always"
+    app:actionViewClass="android.widget.SearchView"
+    />
+    <item
+        android:id="@+id/appointments"
+        android:title="@string/appointment"
+        android:icon="@drawable/ic_date"
+        app:showAsAction="always"
+        app:actionLayout="@layout/custom_menu_layout"
+        />
+    <item
+        android:id="@+id/view_selector"
+        android:title="@string/view_selector"
+        android:icon="@drawable/ic_view_grid"
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/profile"
+        android:title="@string/profile"
+        app:showAsAction="never"
+        android:orderInCategory="1"
+        />
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout"
+        app:showAsAction="never"
+        android:orderInCategory="2"
+        />
+</menu>
