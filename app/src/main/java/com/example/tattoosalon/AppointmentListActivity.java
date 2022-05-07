@@ -8,6 +8,8 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,11 +18,18 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AppointmentListActivity extends AppCompatActivity {
     private static final String LOG_TAG = AppointmentListActivity.class.getName();
@@ -34,9 +43,12 @@ public class AppointmentListActivity extends AppCompatActivity {
     private FrameLayout redCircle;
     private TextView countTextView;
 
+    private FirebaseFirestore mFirestore;
+    private CollectionReference mAppointments;
+
     private int gridNumber = 1;
     private int cartItems = 0;
-    private boolean viewRow = true;
+    private boolean viewRow = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +72,55 @@ public class AppointmentListActivity extends AppCompatActivity {
         mAppointmentItemAdapter = new AppointmentItemAdapter(mAppointmentList, this);
         mRecyclerView.setAdapter(mAppointmentItemAdapter);
 
-        initializeData();
+        mFirestore = FirebaseFirestore.getInstance();
+        mAppointments = mFirestore.collection("Appointments");
+        queryData();
+    }
 
+    private void queryData() {
+        mAppointmentList.clear();
+        mAppointments.orderBy("date").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                AppointmentItem item = document.toObject(AppointmentItem.class);
+                if (item.getGuestEmail().equals("") || item.getGuestEmail().length() == 0 || item.isReserved()) {
+                    item.setId(document.getId());
+                    mAppointmentList.add(item);
+                }
+            }
+            if (mAppointmentList.size() == 0) {
+                initializeData();
+                queryData();
+            }
+
+
+            // Notify the adapter of the change.
+            mAppointmentItemAdapter.notifyDataSetChanged();
+        });
     }
 
     private void initializeData() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd");
+        String currentDate = formatter.format(new Date());
+        String[] tmp = currentDate.split("\\.");
+        int day = Integer.parseInt(tmp[2]);
+        ArrayList<String> time = new ArrayList<>();
+        time.add("8:00");
+        time.add("10:00");
+        time.add("12:00");
+        time.add("14:00");
+        time.add("16:00");
+        String date = tmp[0] + "." + tmp[1] + ".";
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 5; j++) {
+                mAppointments.add(new AppointmentItem(
+                        date + (day + i > 9 ? (day + i) : "0" + (day + i)),
+                        time.get(j),
+                        "",
+                        false)
+                );
+            }
+        }
+        queryData();
     }
 
     @Override
@@ -89,6 +145,7 @@ public class AppointmentListActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -99,11 +156,11 @@ public class AppointmentListActivity extends AppCompatActivity {
                 return true;
             case R.id.profile:
                 Log.d(LOG_TAG, "Profile clicked!");
-                FirebaseAuth.getInstance().signOut();
-                finish();
                 return true;
-            case R.id.date:
+            case R.id.appointments:
                 Log.d(LOG_TAG, "Appointments clicked!");
+                Intent intent = new Intent(this, ReserveAppointmentListActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.view_selector:
                 if (viewRow) {
@@ -141,7 +198,7 @@ public class AppointmentListActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public void updateAlertIcon() {
+    public void updateAlertIcon(AppointmentItem currentItem) {
         cartItems = (cartItems + 1);
         if (0 < cartItems) {
             countTextView.setText(String.valueOf(cartItems));
@@ -150,6 +207,16 @@ public class AppointmentListActivity extends AppCompatActivity {
         }
 
         redCircle.setVisibility((cartItems > 0) ? VISIBLE : GONE);
+        updateCurrentItem(currentItem);
     }
 
+    public void updateCurrentItem(AppointmentItem currentItem) {
+        DocumentReference ref = mAppointments.document(currentItem._getId());
+        ref.update("guestEmail", user.getEmail()).addOnCompleteListener(success -> {
+            Log.d(LOG_TAG, "updateCurrentItem: " + currentItem.getDate() + ":" + currentItem.getTime());
+        }).addOnFailureListener(fail -> {
+            Toast.makeText(this, "Item " + currentItem._getId() + " cannot be updated.", Toast.LENGTH_LONG).show();
+        });
+        queryData();
+    }
 }

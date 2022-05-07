@@ -8,4 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="crayola">#283D3B</color>
+    <color name="carmine">#B03D30</color>
+    <color name="sand">#DBBBA9</color>
+    <color name="jungle_green">#182524</color>
+    <color name="skobeloff">#187177</color>
+    <color name="linen">#F3E8E2</color>
 </resources>

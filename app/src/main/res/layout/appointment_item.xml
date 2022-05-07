@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="@string/item_placeholder"
+            android:layout_centerHorizontal="true"
             android:textColor="?android:textColorSecondary" />
 
         <TextView
@@ -24,11 +25,13 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/date"
             android:padding="8dp"
+            android:layout_centerHorizontal="true"
             android:text="@string/item_info_placeholder" />
 
         <Button
             android:id="@+id/makeAppointment"
             android:layout_width="wrap_content"
+            android:layout_margin="10dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/time"
             android:layout_centerHorizontal="true"

@@ -57,20 +57,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void loginAsGuest(View view) {
-        mAuth.signInAnonymously().addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Log.d(LOG_TAG, "Login as guest done!");
-                    start();
-                } else {
-                    Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
     public void registration(View view) {
         Intent intent = new Intent(this, RegistrationActivity.class);
         intent.putExtra("SECRET_KEY", SECRET_KEY);

@@ -27,8 +27,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
     EditText pwConET;
     EditText phoneET;
 
-    Spinner spinner;
-
     private SharedPreferences preferences;
     private FirebaseAuth mAuth;
 
@@ -47,7 +45,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         pwET = findViewById(R.id.regPassword);
         pwConET = findViewById(R.id.regPassword_Again);
         phoneET = findViewById(R.id.regPhone);
-        spinner = findViewById(R.id.regPhoneType);
 
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
 
@@ -56,11 +53,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
         userNameET.setText(username);
         pwET.setText(password);
-
-        spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.phone_type, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
         mAuth = FirebaseAuth.getInstance();
     }
@@ -71,7 +63,6 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         String pw = pwET.getText().toString();
         String pwConfirm = pwConET.getText().toString();
         String phone = phoneET.getText().toString();
-        String phoneType = spinner.getSelectedItem().toString();
 
         if (username.length() == 0) {
             Toast.makeText(RegistrationActivity.this, "You have to write a name.", Toast.LENGTH_LONG).show();

@@ -18,6 +18,8 @@
     <string name="profile">Profile</string>
     <string name="appointment">Appointment</string>
     <string name="view_selector">View Selector</string>
+    <string name="reserve_appointment">Reserve Appointment</string>
+    <string name="delete_appointment">Delete Appointment</string>
     <string-array name="phone_type">
         <item>Landline</item>
         <item>Work</item>

@@ -69,7 +69,7 @@ public class AppointmentItemAdapter extends RecyclerView.Adapter<AppointmentItem
             } else {
                 String filterPattern = charSequence.toString();
                 for (AppointmentItem item : mAppointmentItemDataAll) {
-                    if (item.getDate().contains(filterPattern)|| item.getTime().contains(filterPattern)){
+                    if (item.getDate().contains(filterPattern) || item.getTime().contains(filterPattern)) {
                         filteredList.add(item);
                     }
                 }
@@ -89,26 +89,27 @@ public class AppointmentItemAdapter extends RecyclerView.Adapter<AppointmentItem
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        // Member Variables for the TextViews
         private TextView mDateText;
         private TextView mTimeText;
+        private AppointmentItem item;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            // Initialize the views.
+
             mDateText = itemView.findViewById(R.id.date);
             mTimeText = itemView.findViewById(R.id.time);
 
             itemView.findViewById(R.id.makeAppointment).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((AppointmentListActivity) mContext).updateAlertIcon();
+                    ((AppointmentListActivity) mContext).updateAlertIcon(item);
                 }
             });
         }
 
         void bindTo(AppointmentItem currentItem) {
+            item = currentItem;
             mDateText.setText(currentItem.getDate());
             mTimeText.setText(currentItem.getTime());
         }
