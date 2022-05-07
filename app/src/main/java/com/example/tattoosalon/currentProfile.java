@@ -11,6 +11,9 @@ public class currentProfile {
         this.phone = phone;
     }
 
+    public currentProfile() {
+    }
+
     public String getName() {
         return name;
     }

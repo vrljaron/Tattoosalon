@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegistrationActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String LOG_TAG = RegistrationActivity.class.getName();
@@ -29,6 +31,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
 
     private SharedPreferences preferences;
     private FirebaseAuth mAuth;
+
+    private FirebaseFirestore mFirestore;
+    private CollectionReference mProfiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,9 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
         phoneET = findViewById(R.id.regPhone);
 
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
+
+        mFirestore = FirebaseFirestore.getInstance();
+        mProfiles = mFirestore.collection("Profiles");
 
         String username = preferences.getString("userName", "");
         String password = preferences.getString("password", "");
@@ -77,6 +85,7 @@ public class RegistrationActivity extends AppCompatActivity implements AdapterVi
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        mProfiles.add(new currentProfile(username, email, phone));
                         Log.d(LOG_TAG, "User created successfully");
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("email", emailET.getText().toString());

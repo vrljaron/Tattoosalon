@@ -92,21 +92,24 @@ public class ReserveAppointmentListActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.logout:
                 Log.d(LOG_TAG, "Logout clicked!");
                 FirebaseAuth.getInstance().signOut();
+                finishAffinity();
                 finish();
                 return true;
             case R.id.profile:
                 Log.d(LOG_TAG, "Profile clicked!");
-                //todo: profile activity
-//                Intent intent = new Intent(this, ProfileActivity.class);
-//                startActivity(intent);
+                intent = new Intent(this, ProfileActivity.class);
+                finishAffinity();
+                startActivity(intent);
                 return true;
             case R.id.appointmentList:
                 Log.d(LOG_TAG, "Appointments clicked!");
-                Intent intent = new Intent(this, AppointmentListActivity.class);
+                intent = new Intent(this, AppointmentListActivity.class);
+                finishAffinity();
                 startActivity(intent);
                 return true;
             default:
@@ -116,11 +119,12 @@ public class ReserveAppointmentListActivity extends AppCompatActivity {
 
     public void deleteAppointment(AppointmentItem item) {
         DocumentReference ref = mAppointments.document(item._getId());
-
+        //todo:finish
     }
 
     public void reserveAppointment(AppointmentItem item) {
         DocumentReference ref = mAppointments.document(item._getId());
-        mNotificationHandler.send(item.getDate() + ":" + item.getTime());
+        mNotificationHandler.send(item.getDate() + ". " + item.getTime());
+        //todo:finish
     }
 }

@@ -31,31 +31,33 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/time">
+            android:layout_below="@id/time"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
 
             <Button
                 android:id="@+id/reserveAppointment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:onClick="reserve"
                 android:text="@string/reserve_appointment" />
 
             <Button
                 android:id="@+id/deleteAppointment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_margin="10dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/jungle_green"
-                android:textColor="@color/white"
-                android:text="@string/delete_appointment" />
+                android:text="@string/delete_appointment"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 

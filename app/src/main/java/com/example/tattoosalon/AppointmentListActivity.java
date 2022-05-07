@@ -148,18 +148,24 @@ public class AppointmentListActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.logout:
                 Log.d(LOG_TAG, "Logout clicked!");
                 FirebaseAuth.getInstance().signOut();
+                finishAffinity();
                 finish();
                 return true;
             case R.id.profile:
                 Log.d(LOG_TAG, "Profile clicked!");
+                intent = new Intent(this, ProfileActivity.class);
+                finishAffinity();
+                startActivity(intent);
                 return true;
             case R.id.appointments:
                 Log.d(LOG_TAG, "Appointments clicked!");
-                Intent intent = new Intent(this, ReserveAppointmentListActivity.class);
+                intent = new Intent(this, ReserveAppointmentListActivity.class);
+                finishAffinity();
                 startActivity(intent);
                 return true;
             case R.id.view_selector:
