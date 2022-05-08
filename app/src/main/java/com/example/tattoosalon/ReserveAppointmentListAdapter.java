@@ -38,7 +38,7 @@ public class ReserveAppointmentListAdapter extends RecyclerView.Adapter<ReserveA
 
 
         if (holder.getAdapterPosition() > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row);
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_row_from_left);
             holder.itemView.startAnimation(animation);
             lastPosition = holder.getAdapterPosition();
         }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tattoo salon</string>
+    <string name="app_name">INK Tattoo</string>
     <string name="name">Name</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
@@ -22,6 +22,8 @@
     <string name="delete_appointment">Delete Appointment</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="delete_profile">delete profile</string>
+    <string name="edit">Edit</string>
+    <string name="save">save changes</string>
     <string-array name="phone_type">
         <item>Landline</item>
         <item>Work</item>

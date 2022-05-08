@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -72,8 +73,10 @@ public class ReserveAppointmentListActivity extends AppCompatActivity {
         mAppointments.whereEqualTo("guestEmail", user.getEmail()).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 AppointmentItem item = document.toObject(AppointmentItem.class);
+                if (!item.isReserved()){
                 item.setId(document.getId());
                 mAppointmentList.add(item);
+                }
             }
 
 
@@ -103,13 +106,11 @@ public class ReserveAppointmentListActivity extends AppCompatActivity {
             case R.id.profile:
                 Log.d(LOG_TAG, "Profile clicked!");
                 intent = new Intent(this, ProfileActivity.class);
-                finishAffinity();
                 startActivity(intent);
                 return true;
             case R.id.appointmentList:
                 Log.d(LOG_TAG, "Appointments clicked!");
                 intent = new Intent(this, AppointmentListActivity.class);
-                finishAffinity();
                 startActivity(intent);
                 return true;
             default:
@@ -119,12 +120,18 @@ public class ReserveAppointmentListActivity extends AppCompatActivity {
 
     public void deleteAppointment(AppointmentItem item) {
         DocumentReference ref = mAppointments.document(item._getId());
-        //todo:finish
+        ref.update("guestEmail", "").addOnSuccessListener(success -> {
+            item.setGuestEmail("");
+            Toast.makeText(this, "Appointment deleted.", Toast.LENGTH_LONG).show();
+            queryData();
+        });
     }
 
     public void reserveAppointment(AppointmentItem item) {
         DocumentReference ref = mAppointments.document(item._getId());
-        mNotificationHandler.send(item.getDate() + ". " + item.getTime());
-        //todo:finish
+        ref.update("reserved", true).addOnSuccessListener(success -> {
+            mNotificationHandler.send(item.getDate() + ". " + item.getTime());
+            queryData();
+        });
     }
 }

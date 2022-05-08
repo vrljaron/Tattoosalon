@@ -82,9 +82,11 @@ public class AppointmentListActivity extends AppCompatActivity {
         mAppointments.orderBy("date").get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                 AppointmentItem item = document.toObject(AppointmentItem.class);
-                if (item.getGuestEmail().equals("") || item.getGuestEmail().length() == 0 || item.isReserved()) {
-                    item.setId(document.getId());
-                    mAppointmentList.add(item);
+                if (!item.isReserved()) {
+                    if (item.getGuestEmail().equals("") || item.getGuestEmail().length() == 0) {
+                        item.setId(document.getId());
+                        mAppointmentList.add(item);
+                    }
                 }
             }
             if (mAppointmentList.size() == 0) {
@@ -130,6 +132,7 @@ public class AppointmentListActivity extends AppCompatActivity {
         MenuItem menuItem = menu.findItem(R.id.search_bar);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;
@@ -142,6 +145,7 @@ public class AppointmentListActivity extends AppCompatActivity {
                 return false;
             }
         });
+
         return true;
     }
 
@@ -159,13 +163,11 @@ public class AppointmentListActivity extends AppCompatActivity {
             case R.id.profile:
                 Log.d(LOG_TAG, "Profile clicked!");
                 intent = new Intent(this, ProfileActivity.class);
-                finishAffinity();
                 startActivity(intent);
                 return true;
             case R.id.appointments:
                 Log.d(LOG_TAG, "Appointments clicked!");
                 intent = new Intent(this, ReserveAppointmentListActivity.class);
-                finishAffinity();
                 startActivity(intent);
                 return true;
             case R.id.view_selector:

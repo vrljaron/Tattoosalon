@@ -32,7 +32,6 @@ public class NotificationHandler {
                 (CHANNEL_ID, "Shop Notification", NotificationManager.IMPORTANCE_HIGH);
 
         channel.enableLights(true);
-        channel.setLightColor(Color.RED);
         channel.enableVibration(true);
         channel.setDescription("Notifications from Tattoo Salon app");
 
